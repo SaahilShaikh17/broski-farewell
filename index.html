@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- ============================================================
+     EDIT ME: page title shown in the browser tab
+     ============================================================ -->
+<title>Farewell, Pranav — Game Over... but a Legend Stays</title>
+<meta name="description" content="A farewell tribute to Pranav from the team." />
+
+<!-- ============================================================
+     SOCIAL LINK PREVIEW (Slack / Teams / iMessage / etc.)
+     EDIT ME: set og:url to your deployed URL once you have it.
+     ============================================================ -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Farewell, Pranav — a Legend Leaves the Lobby" />
+<meta property="og:description" content="A retro-arcade farewell tribute from the team. Press start. ❤" />
+<meta property="og:image" content="assets/og-cover.png" />
+<meta property="og:url" content="[[DEPLOYED_URL — e.g. https://farewell.vercel.app]]" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Farewell, Pranav — a Legend Leaves the Lobby" />
+<meta name="twitter:description" content="A retro-arcade farewell tribute from the team. Press start. ❤" />
+<meta name="twitter:image" content="assets/og-cover.png" />
+
+<!-- pixel favicon (inline SVG data-URI — no extra request) -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%230b0f2a'/%3E%3Crect x='3' y='3' width='2' height='10' fill='%23ff2e88'/%3E%3Crect x='5' y='3' width='5' height='2' fill='%23ff2e88'/%3E%3Crect x='5' y='7' width='4' height='2' fill='%232ee6e6'/%3E%3Crect x='11' y='3' width='2' height='10' fill='%238cff5a'/%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet" />
+
+<style>
+  /* ===========================================================
+     THEME — change these to re-skin the whole page in one place
+     =========================================================== */
+  :root {
+    --bg:        #0b0f2a;   /* deep CRT navy            */
+    --bg-2:      #131a3f;   /* panel background         */
+    --ink:       #e7ecff;   /* default text             */
+    --dim:       #8b93c7;   /* muted text               */
+    --magenta:   #ff2e88;   /* neon pink                */
+    --cyan:      #2ee6e6;   /* neon cyan                */
+    --lime:      #8cff5a;   /* neon green (success)     */
+    --amber:     #ffcf3a;   /* neon yellow              */
+    --purple:    #9d6bff;   /* neon purple              */
+    --pixel:     6px;       /* pixel border thickness   */
+
+    --font-head: 'Press Start 2P', system-ui, sans-serif;
+    --font-body: 'VT323', ui-monospace, 'Courier New', monospace;
+  }
+
+  /* ----------  reset / base  ---------- */
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 22px;
+    line-height: 1.5;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(157,107,255,0.12), transparent 40%),
+      radial-gradient(circle at 85% 30%, rgba(46,230,230,0.10), transparent 45%),
+      radial-gradient(circle at 50% 100%, rgba(255,46,136,0.10), transparent 45%);
+  }
+
+  /* CRT scanline + vignette overlay (purely decorative) */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    background:
+      repeating-linear-gradient(
+        to bottom,
+        rgba(0,0,0,0) 0px,
+        rgba(0,0,0,0) 2px,
+        rgba(0,0,0,0.18) 3px,
+        rgba(0,0,0,0) 4px
+      );
+    mix-blend-mode: multiply;
+    animation: flicker 6s infinite steps(60);
+  }
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9998;
+    box-shadow: inset 0 0 200px rgba(0,0,0,0.8);
+  }
+  @keyframes flicker {
+    0%, 96%, 100% { opacity: 1; }
+    97% { opacity: 0.85; }
+    98% { opacity: 0.95; }
+  }
+
+  /* ----------  typography helpers  ---------- */
+  h1, h2, h3, .pix { font-family: var(--font-head); line-height: 1.4; }
+  h1 { font-size: clamp(1.6rem, 6vw, 3.4rem); margin: 0; }
+  h2 { font-size: clamp(1.1rem, 3.2vw, 1.8rem); margin: 0 0 1.4rem; }
+  h3 { font-size: clamp(0.8rem, 2vw, 1rem); margin: 0 0 0.8rem; }
+  p  { margin: 0 0 1rem; }
+  a  { color: var(--cyan); }
+
+  .neon-magenta { color: var(--magenta); text-shadow: 0 0 8px rgba(255,46,136,0.7); }
+  .neon-cyan    { color: var(--cyan);    text-shadow: 0 0 8px rgba(46,230,230,0.7); }
+  .neon-lime    { color: var(--lime);    text-shadow: 0 0 8px rgba(140,255,90,0.7); }
+  .neon-amber   { color: var(--amber);   text-shadow: 0 0 8px rgba(255,207,58,0.7); }
+
+  .blink { animation: blink 1s steps(2) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* ----------  layout  ---------- */
+  .wrap { width: min(1100px, 92vw); margin-inline: auto; }
+  section { padding: clamp(3rem, 8vw, 6rem) 0; position: relative; }
+
+  .section-tag {
+    font-family: var(--font-head);
+    font-size: 0.7rem;
+    color: var(--bg);
+    background: var(--amber);
+    padding: 6px 10px;
+    display: inline-block;
+    margin-bottom: 1rem;
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.5);
+  }
+
+  /* chunky pixel-border panel (stair-step shadow technique) */
+  .panel {
+    background: var(--bg-2);
+    border: var(--pixel) solid var(--ink);
+    box-shadow:
+      0 0 0 var(--pixel) var(--bg),
+      0 0 0 calc(var(--pixel) * 2) var(--purple),
+      10px 10px 0 calc(var(--pixel) * 2) rgba(0,0,0,0.5);
+    padding: clamp(1.2rem, 3vw, 2rem);
+  }
+
+  /* ===========================================================
+     HERO
+     =========================================================== */
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  #stars { position: absolute; inset: 0; z-index: 0; }
+  .hero-inner { position: relative; z-index: 1; }
+
+  .hero-kicker {
+    font-family: var(--font-head);
+    color: var(--cyan);
+    font-size: clamp(0.6rem, 2vw, 0.9rem);
+    letter-spacing: 2px;
+    margin-bottom: 1.5rem;
+  }
+  .hero-name {
+    /* gradient fill (magenta → cyan); glow + 3D purple offset via drop-shadow
+       so they survive background-clip:text */
+    color: var(--magenta);                       /* fallback if clip unsupported */
+    background: linear-gradient(95deg, var(--magenta) 15%, var(--cyan) 95%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter:
+      drop-shadow(0 0 12px rgba(255,46,136,0.55))
+      drop-shadow(5px 5px 0 var(--purple));
+    margin-bottom: 1.2rem;
+  }
+
+  /* hero name flanked by pixel sprites */
+  .hero-name-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(0.5rem, 3vw, 2rem);
+    margin-bottom: 1.2rem;
+  }
+  .hero-name-row .hero-name { margin-bottom: 0; }
+  .hero-sprite {
+    flex: none;
+    width: clamp(44px, 9vw, 92px);
+    height: auto;
+    image-rendering: pixelated;
+    filter: drop-shadow(3px 3px 0 rgba(0,0,0,0.45));
+    animation: bob 1.9s ease-in-out infinite;
+  }
+  .hero-sprite.flip { animation-name: bob-flip; animation-delay: -0.95s; }
+  @keyframes bob      { 0%,100% { transform: translateY(0); }            50% { transform: translateY(-7px); } }
+  @keyframes bob-flip { 0%,100% { transform: scaleX(-1) translateY(0); } 50% { transform: scaleX(-1) translateY(-7px); } }
+  .hero-tagline {
+    font-family: var(--font-head);
+    font-size: clamp(0.7rem, 2.4vw, 1.2rem);
+    color: var(--amber);
+    margin-bottom: 1.8rem;
+    min-height: 1.4em;                 /* reserve space so rotation doesn't jump */
+    transition: opacity 0.35s ease;
+  }
+  .hero-tagline.fading { opacity: 0; }
+  .hero-line {
+    font-size: clamp(1.1rem, 3vw, 1.6rem);
+    color: var(--ink);
+    max-width: 620px;
+    margin-inline: auto;
+  }
+  .scroll-cue {
+    margin-top: 2.5rem;
+    font-family: var(--font-head);
+    font-size: 0.7rem;
+    color: var(--lime);
+  }
+
+  /* ===========================================================
+     TIMELINE / LEVELS
+     =========================================================== */
+  .levels { display: grid; gap: 1.6rem; }
+  .level {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.2rem;
+    align-items: start;
+  }
+  .level-badge {
+    font-family: var(--font-head);
+    font-size: 0.65rem;
+    background: var(--cyan);
+    color: var(--bg);
+    padding: 10px;
+    text-align: center;
+    min-width: 92px;
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.5);
+    align-self: stretch;
+    display: grid;
+    place-items: center;
+  }
+
+  /* ===========================================================
+     CARD GRIDS (reasons / badges / achievements / gallery)
+     =========================================================== */
+  .grid {
+    display: grid;
+    gap: 1.4rem;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+
+  .reason h3 { color: var(--cyan); }
+  .reason .icon { font-size: 1.6rem; }
+
+  /* memory wall message boxes */
+  .notes { columns: 280px; column-gap: 1.4rem; }
+  .note {
+    break-inside: avoid;
+    margin-bottom: 1.4rem;
+    background: var(--bg-2);
+    border: 4px solid var(--cyan);
+    box-shadow: 6px 6px 0 rgba(0,0,0,0.5);
+    padding: 1rem 1.1rem;
+  }
+  .note .from { font-family: var(--font-head); font-size: 0.6rem; color: var(--amber); margin-top: 0.6rem; }
+  .note .quote { font-size: 1.25rem; }
+
+  /* badges / trophy case */
+  .badge {
+    text-align: center;
+    background: var(--bg-2);
+    border: 4px solid var(--amber);
+    box-shadow: 6px 6px 0 rgba(0,0,0,0.5);
+    padding: 1.4rem 1rem;
+  }
+  .badge .emoji { font-size: 2.6rem; display: block; line-height: 1; }
+  .badge .title { font-family: var(--font-head); font-size: 0.62rem; color: var(--amber); margin-top: 0.9rem; }
+  .badge .desc  { color: var(--dim); margin-top: 0.5rem; }
+
+  /* achievements unlocked */
+  .achv { display: grid; gap: 0.9rem; }
+  .achv li {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    background: var(--bg-2);
+    border-left: 6px solid var(--lime);
+    padding: 0.7rem 1rem;
+  }
+  .achv .check { color: var(--lime); font-family: var(--font-head); font-size: 0.7rem; }
+  .achv .tag   { color: var(--lime); font-family: var(--font-head); font-size: 0.55rem; margin-left: auto; opacity: 0.8; }
+
+  .xp-bar {
+    margin-top: 1.8rem;
+    height: 26px;
+    background: var(--bg-2);
+    border: 4px solid var(--ink);
+    overflow: hidden;
+  }
+  .xp-fill {
+    height: 100%;
+    width: 100%;
+    background: repeating-linear-gradient(45deg, var(--lime) 0 10px, #6fdc44 10px 20px);
+  }
+  .xp-label { font-family: var(--font-head); font-size: 0.55rem; color: var(--lime); margin-top: 0.5rem; }
+
+  /* gallery */
+  .gallery { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+  .shot {
+    aspect-ratio: 4/3;
+    border: 4px solid var(--purple);
+    box-shadow: 6px 6px 0 rgba(0,0,0,0.5);
+    background: var(--bg-2);
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+  }
+  .shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .shot .placeholder { color: var(--dim); font-size: 1rem; text-align: center; padding: 1rem; }
+
+  /* single featured photo (MOMENTS) — show the whole shot, not cropped */
+  .moment { max-width: 620px; margin-inline: auto; }
+  .shot.single { aspect-ratio: auto; }
+  .shot.single img { position: static; height: auto; object-fit: contain; }
+  .moment-cap {
+    text-align: center;
+    font-family: var(--font-head);
+    color: var(--amber);
+    font-size: clamp(0.6rem, 2vw, 0.8rem);
+    line-height: 1.5;
+    margin-top: 1.1rem;
+  }
+
+  /* memes are text-heavy — show the whole image instead of cropping it */
+  #memes .shot img { object-fit: contain; }
+  .shot .cap {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: rgba(11,15,42,0.85);
+    font-size: 1rem; padding: 4px 8px; color: var(--cyan);
+  }
+
+  /* lightbox */
+  #lightbox {
+    position: fixed; inset: 0; z-index: 10000;
+    background: rgba(0,0,0,0.92);
+    display: none; place-items: center; padding: 5vw;
+  }
+  #lightbox.open { display: grid; }
+  #lightbox img { max-width: 90vw; max-height: 85vh; border: 6px solid var(--cyan); }
+  #lightbox .close { position: absolute; top: 16px; right: 20px; font-family: var(--font-head); color: var(--magenta); font-size: 1rem; cursor: pointer; }
+
+  /* ===========================================================
+     FINAL SEND-OFF
+     =========================================================== */
+  #finale { text-align: center; }
+  .btn-start {
+    font-family: var(--font-head);
+    font-size: clamp(0.8rem, 2.5vw, 1.1rem);
+    color: var(--bg);
+    background: var(--lime);
+    border: none;
+    padding: 18px 26px;
+    cursor: pointer;
+    box-shadow: 6px 6px 0 rgba(0,0,0,0.6);
+    transition: transform 0.06s ease, box-shadow 0.06s ease;
+  }
+  .btn-start:hover { background: var(--cyan); }
+  .btn-start:active { transform: translate(6px, 6px); box-shadow: 0 0 0 rgba(0,0,0,0.6); }
+
+  #final-message {
+    margin-top: 2.5rem;
+    max-width: 680px;
+    margin-inline: auto;
+    display: none;
+  }
+  #final-message.reveal { display: block; animation: fadeUp 0.8s ease both; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+
+  .finale-quote { font-size: clamp(1.2rem, 3vw, 1.7rem); color: var(--amber); }
+  .finale-team  { color: var(--dim); margin-top: 1.2rem; }
+
+  footer { text-align: center; padding: 2.5rem 0; color: var(--dim); font-size: 1rem; }
+
+  /* ----------  keyboard focus (accessibility)  ---------- */
+  .btn-start:focus-visible,
+  .shot:focus-visible,
+  #lightbox .close:focus-visible {
+    outline: 4px solid var(--amber);
+    outline-offset: 4px;
+  }
+
+  /* ----------  "press F to pay respects" counter  ---------- */
+  .respect-count { color: var(--magenta); font-family: var(--font-head); font-size: 0.7rem; }
+  /* floating F that drifts up + fades when you press F */
+  .respect-float {
+    position: fixed;
+    z-index: 10001;
+    pointer-events: none;
+    font-family: var(--font-head);
+    color: var(--magenta);
+    text-shadow: 0 0 10px rgba(255,46,136,0.8);
+    animation: respectRise 1.1s ease-out forwards;
+  }
+  @keyframes respectRise {
+    from { opacity: 1; transform: translateY(0) scale(1); }
+    to   { opacity: 0; transform: translateY(-90px) scale(1.6); }
+  }
+
+  /* ----------  confetti + konami canvases / toast  ---------- */
+  #fx {
+    position: fixed; inset: 0; z-index: 10002; pointer-events: none; display: none;
+  }
+  #fx.live { display: block; }
+  #cheat-toast {
+    position: fixed; left: 50%; top: 18px; transform: translateX(-50%) translateY(-150%);
+    z-index: 10003;
+    background: var(--magenta); color: var(--bg);
+    font-family: var(--font-head); font-size: 0.7rem;
+    padding: 12px 18px; box-shadow: 6px 6px 0 rgba(0,0,0,0.5);
+    transition: transform 0.35s steps(6);
+  }
+  #cheat-toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* ----------  scroll reveal (sections fade/slide up)  ---------- */
+  .reveal-on-scroll { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal-on-scroll.in-view { opacity: 1; transform: none; }
+
+  /* XP bar fills from 0 → 100% when achievements scrolls into view */
+  .xp-fill { width: 0; transition: width 1.4s steps(20); }
+  .xp-fill.filled { width: 100%; }
+
+  /* ----------  PLAYER STATS card (replaces the journey timeline)  ---------- */
+  .player-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 1.6rem; flex-wrap: wrap; }
+  .player-name { font-family: var(--font-head); font-size: clamp(1.2rem, 4vw, 2rem); }
+  .player-class { font-family: var(--font-head); font-size: 0.6rem; color: var(--amber); margin-top: 0.7rem; line-height: 1.5; }
+  .player-meta { color: var(--dim); margin-top: 0.5rem; font-size: 1rem; }
+  .player-avatar { width: 72px; height: auto; image-rendering: pixelated; flex: none; filter: drop-shadow(3px 3px 0 rgba(0,0,0,0.45)); }
+  .stats { display: grid; gap: 0.9rem; }
+  .stat { display: grid; grid-template-columns: 8rem 1fr 2.2rem; align-items: center; gap: 0.8rem; }
+  .stat-label { font-family: var(--font-head); font-size: 0.55rem; color: var(--cyan); }
+  .stat-track { height: 18px; background: var(--bg); border: 3px solid var(--ink); overflow: hidden; }
+  .stat-fill { display: block; height: 100%; width: 0; background: repeating-linear-gradient(45deg, var(--lime) 0 8px, #6fdc44 8px 16px); transition: width 1.3s steps(24); }
+  #player.in-view .stat-fill { width: var(--w); }
+  .stat-val { font-family: var(--font-head); font-size: 0.55rem; color: var(--lime); text-align: right; }
+  .stats-sub { font-family: var(--font-head); font-size: 0.55rem; color: var(--purple); margin: 0.6rem 0 0.1rem; letter-spacing: 1px; }
+  .player-foot { margin-top: 1.6rem; border-top: 3px dashed rgba(231,236,255,0.22); padding-top: 1.2rem; }
+  .player-foot p { margin: 0 0 0.6rem; }
+  .player-foot .kv { font-family: var(--font-head); font-size: 0.55rem; color: var(--amber); margin-right: 0.6rem; }
+  @media (max-width: 520px) { .stat { grid-template-columns: 6rem 1fr 2rem; gap: 0.5rem; } .stat-label { font-size: 0.5rem; } }
+
+  /* ----------  motion-safety  ---------- */
+  @media (prefers-reduced-motion: reduce) {
+    body::before { animation: none; }
+    .blink { animation: none; }
+    html { scroll-behavior: auto; }
+    #stars { display: none; }
+    /* show everything immediately, no transforms/animations */
+    .reveal-on-scroll { opacity: 1; transform: none; transition: none; }
+    .xp-fill { width: 100%; transition: none; }
+    .stat-fill { width: var(--w); transition: none; }
+    .respect-float { display: none; }
+    #cheat-toast { transition: none; }
+    .hero-tagline { transition: none; }
+    .hero-sprite { animation: none; }
+    .hero-sprite.flip { transform: scaleX(-1); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===========================================================
+     1. HERO
+     =========================================================== -->
+<section id="hero">
+  <canvas id="stars" aria-hidden="true"></canvas>
+  <div class="hero-inner wrap">
+    <div class="hero-kicker blink">★ PLAYER 1 HAS LEFT THE GAME ★</div>
+    <!-- EDIT ME: name + tagline + heartfelt line -->
+    <div class="hero-name-row">
+      <img class="hero-sprite" src="assets/link.png" alt="" aria-hidden="true" />
+      <h1 class="hero-name">Pranav</h1>
+      <img class="hero-sprite flip" src="assets/link.png" alt="" aria-hidden="true" />
+    </div>
+    <div class="hero-tagline" id="tagline">THE LEGEND LEAVES THE LOBBY</div>
+    <p class="hero-line">Some people leave a team. Some people leave behind a standard.</p>
+    <div class="scroll-cue blink">▾ PRESS DOWN TO CONTINUE ▾</div>
+  </div>
+</section>
+
+<!-- ===========================================================
+     2. PLAYER STATS (character card)
+     =========================================================== -->
+<section id="player" class="reveal-on-scroll">
+  <div class="wrap">
+    <span class="section-tag">CHARACTER SELECT</span>
+    <h2 class="neon-cyan">PLAYER STATS</h2>
+    <div class="panel">
+      <div class="player-head">
+        <div>
+          <div class="player-name neon-magenta">PRANAV</div>
+          <div class="player-class">CLASS: Tech Lead / AI Mage · LVL MAX</div>
+          <div class="player-meta">GUILD: Genius Broskis &nbsp;·&nbsp; SERVER: Singapore</div>
+        </div>
+        <img class="player-avatar" src="assets/link.png" alt="" aria-hidden="true" />
+      </div>
+
+      <div class="stats">
+        <div class="stat"><span class="stat-label">DEBUGGING</span><span class="stat-track"><span class="stat-fill" style="--w:99%"></span></span><span class="stat-val">99</span></div>
+        <div class="stat"><span class="stat-label">BACKEND</span><span class="stat-track"><span class="stat-fill" style="--w:99%"></span></span><span class="stat-val">99</span></div>
+        <div class="stat"><span class="stat-label">MENTORING</span><span class="stat-track"><span class="stat-fill" style="--w:99%"></span></span><span class="stat-val">99</span></div>
+        <div class="stat"><span class="stat-label">AI-FU</span><span class="stat-track"><span class="stat-fill" style="--w:99%"></span></span><span class="stat-val">99</span></div>
+        <div class="stat"><span class="stat-label">UPTIME</span><span class="stat-track"><span class="stat-fill" style="--w:99%"></span></span><span class="stat-val">99</span></div>
+        <div class="stat"><span class="stat-label">CALM (SEEMINGLY)</span><span class="stat-track"><span class="stat-fill" style="--w:98%"></span></span><span class="stat-val">98</span></div>
+
+        <div class="stats-sub">// OFF THE CLOCK</div>
+
+        <div class="stat"><span class="stat-label">FILMS</span><span class="stat-track"><span class="stat-fill" style="--w:99%"></span></span><span class="stat-val">99</span></div>
+        <div class="stat"><span class="stat-label">MARVEL</span><span class="stat-track"><span class="stat-fill" style="--w:99%"></span></span><span class="stat-val">99</span></div>
+        <div class="stat"><span class="stat-label">TOMFOOLERY</span><span class="stat-track"><span class="stat-fill" style="--w:99%"></span></span><span class="stat-val">99</span></div>
+        <div class="stat"><span class="stat-label">SASSY SLAY QUEEN ENERGY</span><span class="stat-track"><span class="stat-fill" style="--w:100%"></span></span><span class="stat-val">100</span></div>
+        <div class="stat"><span class="stat-label">HUMOR</span><span class="stat-track"><span class="stat-fill" style="--w:95%"></span></span><span class="stat-val">95</span></div>
+        <div class="stat"><span class="stat-label">ARSENAL UCLs</span><span class="stat-track"><span class="stat-fill" style="--w:0%"></span></span><span class="stat-val">0</span></div>
+      </div>
+
+      <div class="player-foot">
+        <p><span class="kv">SPECIAL MOVE</span> "Ask Pranav" — instantly unblocks any teammate. ⚠ Each cast irritates him +10.</p>
+        <p><span class="kv">LOADOUT</span> ☕ bottomless coffee · 📜 the k8s runbook · 🤖 a fleet of AI agents · 🎬 a hot take on every film · 🔴 a (cursed) Arsenal scarf · 💅 main-character energy</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================================================
+     3. WHY WE'LL MISS YOU
+     =========================================================== -->
+<section id="why" class="reveal-on-scroll">
+  <div class="wrap">
+    <span class="section-tag">MVP</span>
+    <h2 class="neon-magenta">WHY WE'LL MISS YOU</h2>
+    <div class="grid">
+
+      <!-- TRAIT CARD -->
+      <div class="panel reason">
+        <span class="icon" aria-hidden="true">🧭</span>
+        <h3>THE MENTOR</h3>
+        <p>Turned juniors into people who now mentor juniors.</p>
+      </div>
+      <div class="panel reason">
+        <span class="icon" aria-hidden="true">🧊</span>
+        <h3>CALM IN THE CHAOS</h3>
+        <p>Prod's on fire and he's already calmly typing the fix.</p>
+      </div>
+      <div class="panel reason">
+        <span class="icon" aria-hidden="true">🤝</span>
+        <h3>ALWAYS ONE PING AWAY</h3>
+        <p>Never once made you feel dumb for asking.</p>
+      </div>
+      <div class="panel reason">
+        <span class="icon" aria-hidden="true">🤖</span>
+        <h3>THE AI WHISPERER</h3>
+        <p>Had the whole team leveling up their prompt game.</p>
+      </div>
+      <div class="panel reason">
+        <span class="icon" aria-hidden="true">💬</span>
+        <h3>THE VIBE CURATOR</h3>
+        <p>Made standups funnier and the gossip sessions elite.</p>
+      </div>
+      <div class="panel reason">
+        <span class="icon" aria-hidden="true">🍜</span>
+        <h3>THE FOOD CONNOISSEUR</h3>
+        <p>Serious about good food — and always down for the discussion.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===========================================================
+     4. MEMORY WALL
+     =========================================================== -->
+<section id="wall" class="reveal-on-scroll">
+  <div class="wrap">
+    <span class="section-tag">GUESTBOOK</span>
+    <h2 class="neon-cyan">THE MEMORY WALL</h2>
+    <p style="color:var(--dim); margin-bottom:1.8rem;">Notes dropped by the team. // press <span class="neon-magenta">F</span> to pay respects &nbsp;·&nbsp; <span class="respect-count" id="respectCount">0</span> paid</p>
+    <div class="notes">
+
+      <!-- NOTE — copy this block once per teammate -->
+      <div class="note">
+        <p class="quote">"heyo best and most capable teammate, best wishes for the future and have a good good one!"</p>
+        <p class="from">— Darryl</p>
+      </div>
+
+      <div class="note">
+        <p class="quote">"It's hard to believe that our journey started with you introducing me to different food cuisines in Bangalore, and now we're at your last day at HPE.</p>
+        <p class="quote">Over the time, we've had interesting discussions, and I've seen you take on a wide variety of challenges with confidence and determination. I truly appreciate your hard work, dedication, and the support you've always extended to the entire team.</p>
+        <p class="quote">On a personal note, you've been a source of inspiration for me. Your approach to leveraging AI effectively at work has motivated me to keep learning and improving in that area.</p>
+        <p class="quote">Thank you for all the knowledge and memorable moments. Wishing you success. I hope our paths cross again in the future."</p>
+        <p class="from">— Satya</p>
+      </div>
+
+      <div class="note">
+        <p class="quote">"Thank you for always listening, supporting, and making work fun. You've been the best team lead anyone could ask for, an amazing mentor and a great friend. It's been a privilege working with you and I'm grateful for all the guidance and support you've provided. (P.S. I'll miss our gossip sessions)"</p>
+        <p class="from">— Vandana</p>
+      </div>
+
+      <div class="note">
+        <p class="quote">"defff gonnna missss my batman and twin forever"</p>
+        <p class="from">— Yesvanth</p>
+      </div>
+
+      <div class="note">
+        <p class="quote">"Nerding out with you over a spiritual level was actually insane, and i'm definitely going to miss my twin fr"</p>
+        <p class="from">— Lil bro (Saahil)</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===========================================================
+     5. SUPERLATIVES / BADGES
+     =========================================================== -->
+<section id="badges" class="reveal-on-scroll">
+  <div class="wrap">
+    <span class="section-tag">TROPHY CASE</span>
+    <h2 class="neon-amber">BADGES EARNED</h2>
+    <div class="grid">
+
+      <div class="badge">
+        <span class="emoji" aria-hidden="true">⚡</span>
+        <div class="title">FASTEST FIXER ALIVE</div>
+      </div>
+      <div class="badge">
+        <span class="emoji" aria-hidden="true">🧯</span>
+        <div class="title">ONE-MAN INCIDENT RESPONSE</div>
+      </div>
+      <div class="badge">
+        <span class="emoji" aria-hidden="true">🎬</span>
+        <div class="title">RESIDENT FILM CRITIC</div>
+      </div>
+      <div class="badge">
+        <span class="emoji" aria-hidden="true">🦸</span>
+        <div class="title">WALKING MCU WIKI</div>
+      </div>
+      <div class="badge">
+        <span class="emoji" aria-hidden="true">💅</span>
+        <div class="title">SASS LEVEL: OVER 9000</div>
+      </div>
+      <div class="badge">
+        <span class="emoji" aria-hidden="true">🤡</span>
+        <div class="title">MINISTER OF TOMFOOLERY</div>
+      </div>
+      <div class="badge">
+        <span class="emoji" aria-hidden="true">🔴</span>
+        <div class="title">ARSENAL'S MOST LOYAL VICTIM</div>
+      </div>
+      <div class="badge">
+        <span class="emoji" aria-hidden="true">🎮</span>
+        <div class="title">TEAM'S HIDDEN CHEAT CODE</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===========================================================
+     6. PHOTO / MOMENTS GALLERY
+     =========================================================== -->
+<section id="gallery" class="reveal-on-scroll">
+  <div class="wrap">
+    <span class="section-tag">SAVE FILES</span>
+    <h2 class="neon-cyan">MOMENTS</h2>
+    <p style="color:var(--dim); margin-bottom:1.8rem;">// the whole squad. one save file.</p>
+    <div class="moment">
+      <!-- to swap the photo: drop a new file in /assets and update src + alt -->
+      <div class="shot single">
+        <img src="assets/sg-team.jpg" alt="Pranav with the Singapore team" />
+      </div>
+      <p class="moment-cap">— your favourite bosses &amp; SG teammates</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================================================
+     6.5 BONUS STAGE — MEMES
+     =========================================================== -->
+<section id="memes" class="reveal-on-scroll">
+  <div class="wrap">
+    <span class="section-tag">BONUS STAGE</span>
+    <h2 class="neon-magenta">MEME DUMP</h2>
+    <p style="color:var(--dim); margin-bottom:1.8rem;">// the stages of you leaving, in meme form.</p>
+    <div class="gallery">
+
+      <!-- MEME TILE — drop an image in /assets and replace the .placeholder
+           div with: <img src="assets/your-meme.jpg" alt="..."> -->
+      <div class="shot">
+        <img src="assets/meme-drake.jpg" alt="Drake meme: happy about Pranav's new role vs quietly hoping he stays" />
+        <span class="cap">happy for you, but…</span>
+      </div>
+      <div class="shot">
+        <img src="assets/meme-anakin.jpg" alt="Anakin and Padmé: you'll still pick up the 2am prod fix after you leave, right?" />
+        <span class="cap">right…?</span>
+      </div>
+      <div class="shot">
+        <img src="assets/meme-alwayshasbeen.jpg" alt="Always Has Been: Pranav's been keeping the prod env alive this whole time" />
+        <span class="cap">always has been 🔫</span>
+      </div>
+      <div class="shot">
+        <img src="assets/meme-pablo.jpg" alt="Sad Pablo Escobar: waiting for Pranav's message in the team chat" />
+        <span class="cap">the channel's quiet now</span>
+      </div>
+      <div class="shot">
+        <img src="assets/meme-boromir.jpg" alt="One does not simply replace Pranav" />
+        <span class="cap">one does not simply…</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===========================================================
+     7. ACHIEVEMENTS UNLOCKED
+     =========================================================== -->
+<section id="achievements" class="reveal-on-scroll">
+  <div class="wrap">
+    <span class="section-tag">ACHIEVEMENTS</span>
+    <h2 class="neon-lime">ACHIEVEMENTS UNLOCKED</h2>
+    <ul class="achv">
+      <li><span class="check">✓</span> Guided countless teammates <span class="tag">UNLOCKED</span></li>
+      <li><span class="check">✓</span> Debugged impossible problems <span class="tag">UNLOCKED</span></li>
+      <li><span class="check">✓</span> Made deadlines look less scary <span class="tag">UNLOCKED</span></li>
+      <li><span class="check">✓</span> Mentor Mode: Always On <span class="tag">UNLOCKED</span></li>
+    </ul>
+    <div class="xp-bar"><div class="xp-fill"></div></div>
+    <div class="xp-label">XP: MAX // 100% COMPLETE</div>
+  </div>
+</section>
+
+<!-- ===========================================================
+     8. FINAL SEND-OFF
+     =========================================================== -->
+<section id="finale" class="reveal-on-scroll">
+  <div class="wrap">
+    <span class="section-tag">END SCREEN</span>
+    <h2 class="neon-magenta">ONE LAST THING...</h2>
+    <button class="btn-start" id="startBtn">▶ PRESS START TO CONTINUE</button>
+
+    <div id="final-message">
+      <!-- EDIT ME: the hidden final message -->
+      <p class="finale-quote">"O Captain! My Captain!"</p>
+      <p class="finale-team">Thanks for everything, captain. The lobby's quieter without you. — Genius Broskis 💜</p>
+      <p class="neon-cyan" style="font-family:var(--font-head); font-size:0.8rem; margin-top:2rem;">GG. ❤</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Made with ♥ by the team &middot; <span class="neon-cyan">Genius Broskis</span>
+</footer>
+
+<!-- lightbox for gallery -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged photo (press Escape to close)">
+  <span class="close" role="button" tabindex="0">✕ CLOSE</span>
+  <img alt="enlarged moment" />
+</div>
+
+<!-- confetti / konami particle layer + cheat toast -->
+<canvas id="fx" aria-hidden="true"></canvas>
+<div id="cheat-toast" role="status">★ CHEAT ACTIVATED ★ — you found the secret. GG. ❤</div>
+
+<script>
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const PALETTE = ['#2ee6e6', '#ff2e88', '#ffcf3a', '#9d6bff', '#8cff5a', '#e7ecff'];
+
+  /* ===========================================================
+     CONFETTI / PIXEL BURST  (dependency-free, shared #fx canvas)
+     =========================================================== */
+  const fx = document.getElementById('fx');
+  const fxCtx = fx.getContext('2d');
+  let confetti = [];
+  let fxRunning = false;
+
+  function sizeFx() { fx.width = window.innerWidth; fx.height = window.innerHeight; }
+  window.addEventListener('resize', sizeFx);
+  sizeFx();
+
+  function burstConfetti(count) {
+    if (reduce) return;                       // honor reduced-motion
+    sizeFx();
+    const cx = fx.width / 2, cy = fx.height * 0.35;
+    for (let i = 0; i < count; i++) {
+      const angle = (Math.PI * 2 * i) / count + Math.random();
+      const speed = 4 + Math.random() * 7;
+      confetti.push({
+        x: cx, y: cy,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed - 4,
+        size: 4 + Math.floor(Math.random() * 5),
+        color: PALETTE[Math.floor(Math.random() * PALETTE.length)],
+        life: 90 + Math.floor(Math.random() * 40)
+      });
+    }
+    if (!fxRunning) { fxRunning = true; fx.classList.add('live'); requestAnimationFrame(fxTick); }
+  }
+
+  function fxTick() {
+    fxCtx.clearRect(0, 0, fx.width, fx.height);
+    confetti = confetti.filter(p => p.life > 0);
+    for (const p of confetti) {
+      p.x += p.vx; p.y += p.vy; p.vy += 0.18; p.vx *= 0.99; p.life--;
+      fxCtx.globalAlpha = Math.max(0, Math.min(1, p.life / 40));
+      fxCtx.fillStyle = p.color;
+      fxCtx.fillRect(Math.floor(p.x), Math.floor(p.y), p.size, p.size);
+    }
+    fxCtx.globalAlpha = 1;
+    if (confetti.length) { requestAnimationFrame(fxTick); }
+    else { fxRunning = false; fx.classList.remove('live'); }
+  }
+
+  /* ===========================================================
+     ROTATING TAGLINE  (pop-culture send-offs; static if reduced-motion)
+     =========================================================== */
+  const TAGLINES = [
+    'THE LEGEND LEAVES THE LOBBY',
+    'SO LONG, AND THANKS FOR ALL THE FISH',
+    'TO INFINITY AND BEYOND',
+    'MISCHIEF MANAGED',
+    'NEW GAME+ UNLOCKED',
+    "I'LL BE BACK",
+    'MAY THE FORCE BE WITH YOU',
+    'ROLL CREDITS'
+  ];
+  const tagline = document.getElementById('tagline');
+  if (tagline && !reduce) {
+    let ti = 0;
+    setInterval(() => {
+      tagline.classList.add('fading');
+      setTimeout(() => {
+        ti = (ti + 1) % TAGLINES.length;
+        tagline.textContent = TAGLINES[ti];
+        tagline.classList.remove('fading');
+      }, 350);                       // matches the CSS opacity transition
+    }, 2600);
+  }
+
+  /* ===========================================================
+     FINAL MESSAGE REVEAL  (+ confetti)
+     =========================================================== */
+  const startBtn = document.getElementById('startBtn');
+  const finalMsg = document.getElementById('final-message');
+  startBtn.addEventListener('click', () => {
+    finalMsg.classList.add('reveal');
+    startBtn.textContent = '♥ CONTINUE...';
+    finalMsg.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+    burstConfetti(140);
+  });
+
+  /* ===========================================================
+     GALLERY LIGHTBOX  (only real <img> tiles; keyboard + Esc)
+     =========================================================== */
+  const lb = document.getElementById('lightbox');
+  const lbImg = lb.querySelector('img');
+  const lbClose = lb.querySelector('.close');
+  let lastFocused = null;
+
+  function openLightbox(src, trigger) {
+    lbImg.src = src;
+    lb.classList.add('open');
+    lastFocused = trigger || null;
+    lbClose.focus();
+  }
+  function closeLightbox() {
+    lb.classList.remove('open');
+    if (lastFocused) { lastFocused.focus(); lastFocused = null; }
+  }
+
+  document.querySelectorAll('.shot img').forEach(img => {
+    const tile = img.closest('.shot');
+    tile.tabIndex = 0;                                   // keyboard-focusable
+    tile.setAttribute('role', 'button');
+    tile.setAttribute('aria-label', 'Enlarge photo');
+    const open = () => openLightbox(img.src, tile);
+    tile.addEventListener('click', open);
+    tile.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); }
+    });
+  });
+
+  // close on backdrop or ✕ — but NOT when clicking the image itself
+  lb.addEventListener('click', e => { if (e.target !== lbImg) closeLightbox(); });
+  lbClose.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); closeLightbox(); }
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && lb.classList.contains('open')) closeLightbox();
+  });
+
+  /* ===========================================================
+     PRESS F TO PAY RESPECTS  (persistent counter + floating F)
+     =========================================================== */
+  const respectEl = document.getElementById('respectCount');
+  let respects = parseInt(localStorage.getItem('respectsPaid') || '0', 10);
+  if (respectEl) respectEl.textContent = respects;
+
+  function payRespects() {
+    respects++;
+    if (respectEl) respectEl.textContent = respects;
+    localStorage.setItem('respectsPaid', String(respects));
+    if (reduce) return;
+    const f = document.createElement('span');
+    f.className = 'respect-float';
+    f.textContent = 'F';
+    f.style.left = (10 + Math.random() * 80) + 'vw';
+    f.style.bottom = '14vh';
+    f.style.fontSize = (1 + Math.random() * 1.2) + 'rem';
+    document.body.appendChild(f);
+    setTimeout(() => f.remove(), 1200);
+  }
+
+  /* ===========================================================
+     KONAMI CODE  → confetti + cheat toast
+     =========================================================== */
+  const KONAMI = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+  let kbuf = [];
+  const toast = document.getElementById('cheat-toast');
+  let toastTimer = null;
+
+  function fireCheat() {
+    burstConfetti(220);
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 4000);
+  }
+
+  document.addEventListener('keydown', e => {
+    // ignore typing inside form fields
+    const tag = (e.target.tagName || '').toLowerCase();
+    if (tag === 'input' || tag === 'textarea') return;
+
+    // Press F to pay respects
+    if (e.key === 'f' || e.key === 'F') payRespects();
+
+    // Konami buffer
+    kbuf.push(e.key);
+    if (kbuf.length > KONAMI.length) kbuf.shift();
+    if (KONAMI.every((k, i) => (kbuf[i] || '').toLowerCase() === k.toLowerCase())) {
+      kbuf = [];
+      fireCheat();
+    }
+  });
+
+  /* ===========================================================
+     SCROLL REVEAL  +  XP BAR FILL  (IntersectionObserver)
+     =========================================================== */
+  if ('IntersectionObserver' in window) {
+    const revealObs = new IntersectionObserver((entries, obs) => {
+      entries.forEach(en => {
+        if (en.isIntersecting) { en.target.classList.add('in-view'); obs.unobserve(en.target); }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal-on-scroll').forEach(el => revealObs.observe(el));
+
+    const xpFill = document.querySelector('.xp-fill');
+    const achievements = document.getElementById('achievements');
+    if (xpFill && achievements) {
+      const xpObs = new IntersectionObserver((entries, obs) => {
+        entries.forEach(en => {
+          if (en.isIntersecting) { xpFill.classList.add('filled'); obs.disconnect(); }
+        });
+      }, { threshold: 0.3 });
+      xpObs.observe(achievements);
+    }
+  } else {
+    // no IO support: just show everything
+    document.querySelectorAll('.reveal-on-scroll').forEach(el => el.classList.add('in-view'));
+    const xpFill = document.querySelector('.xp-fill');
+    if (xpFill) xpFill.classList.add('filled');
+  }
+
+  /* ===========================================================
+     HERO STARFIELD  (skipped if reduced-motion; pauses off-screen)
+     =========================================================== */
+  if (!reduce) {
+    const canvas = document.getElementById('stars');
+    const ctx = canvas.getContext('2d');
+    const hero = document.getElementById('hero');
+    let stars = [];
+    let rafId = null;
+    let visible = true;
+
+    function seed(rng) { return (Math.sin(rng * 99991) + 1) / 2; } // deterministic-ish jitter
+
+    function resize() {
+      canvas.width = hero.clientWidth;
+      canvas.height = hero.clientHeight;
+      stars = [];
+      const count = Math.floor((canvas.width * canvas.height) / 7000);
+      for (let i = 0; i < count; i++) {
+        stars.push({
+          x: seed(i + 1) * canvas.width,
+          y: seed(i + 2) * canvas.height,
+          s: 1 + Math.floor(seed(i + 3) * 3),
+          v: 0.2 + seed(i + 4) * 0.8,
+          c: ['#2ee6e6', '#ff2e88', '#ffcf3a', '#9d6bff', '#e7ecff'][i % 5]
+        });
+      }
+    }
+
+    function tick() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (const st of stars) {
+        ctx.fillStyle = st.c;
+        ctx.fillRect(Math.floor(st.x), Math.floor(st.y), st.s, st.s);
+        st.y += st.v;
+        if (st.y > canvas.height) { st.y = 0; st.x = (st.x * 7 + 13) % canvas.width; }
+      }
+      rafId = requestAnimationFrame(tick);
+    }
+    function start() { if (rafId == null) tick(); }
+    function stop()  { if (rafId != null) { cancelAnimationFrame(rafId); rafId = null; } }
+
+    window.addEventListener('resize', resize);
+    resize();
+    start();
+
+    // pause the loop when the hero scrolls out of view (saves battery)
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(([en]) => {
+        visible = en.isIntersecting;
+        if (visible) start(); else stop();
+      }, { threshold: 0 }).observe(hero);
+    }
+  }
+</script>
+</body>
+</html>
